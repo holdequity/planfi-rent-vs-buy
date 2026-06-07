@@ -92,8 +92,9 @@ Restart Claude Code (or start a new session). The skill auto-loads by its descri
    derives MAGI + filing status server-side.
 2. `analyze_rent_vs_buy { purchase_price, mortgage_rate, monthly_rent, …, plan_id }` (or pass `magi`
    + `filing_status` directly) → break-even appreciation rate + per-horizon BUY vs RENT + taxes.
-3. (on demand) follow the returned `next_actions[]` — e.g. `analyze_property_return` to dig into the
-   specific property, or `generate_financial_plan` to set the decision in the full plan context.
+3. (on demand) follow the returned `next_actions[]` — the server-defined edge out of
+   `analyze_rent_vs_buy` is `generate_financial_plan`, to set the decision in the full plan context.
+   (`analyze_property_return` is a related tool that chains TO rent-vs-buy, not the reverse.)
 
 The headline is `breakeven_home_appreciation_real` (both `pre_tax` and `after_tax`): the real
 home-appreciation rate at which BUY net worth ties RENT net worth at the longest horizon.

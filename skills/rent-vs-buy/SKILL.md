@@ -105,9 +105,10 @@ server derive the household context (it reports `magi_source: "plan"`).
 ## Next-actions hints
 
 The tool returns a `next_actions[]` array (each `{ tool, why, prefilled_args }`, with `prefilled_args`
-carrying `{ plan_id }` when available). Follow these server-suggested chains — e.g. into
-`analyze_property_return` to dig into the specific property, or `generate_financial_plan` to set the
-rent-vs-buy decision in the context of the full household plan — rather than guessing the next call.
+carrying `{ plan_id }` when available). The only server-defined edge out of `analyze_rent_vs_buy` is to
+`generate_financial_plan` (fold the rent-or-buy decision into the full FIRE timeline) — follow that
+rather than guessing the next call. (`analyze_property_return` chains the other way: it suggests
+`analyze_rent_vs_buy` as ITS follow-up, not vice versa.)
 
 ## Notes
 
