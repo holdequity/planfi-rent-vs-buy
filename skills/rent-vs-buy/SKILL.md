@@ -19,6 +19,7 @@ This skill uses these tools (may be namespaced, e.g. `mcp__planfi__analyze_rent_
 - optional: **`analyze_property_return`** (return on a specific property purchase),
   **`forecast_str_market`** (if they're weighing a short-term rental), **`generate_financial_plan`**
   (to derive household tax context and get a `plan_id`).
+- **`analyze_home_equity`** — model tapping existing equity (HELOC revolving draw/repay, cash-out refi, or reverse mortgage) instead of selling.
 
 Use whichever name your environment exposes (bare or `mcp__planfi__`-prefixed); below they are
 written bare. If they're NOT available, tell the user to connect the MCP, then continue:
@@ -102,6 +103,29 @@ server derive the household context (it reports `magi_source: "plan"`).
   user can correct any silent assumption (these also ride on `disclosures.assumptions`). The server is
   the source of truth for what it defaulted; don't enumerate defaults from memory.
 
+## Step 4 — Already own? Consider tapping equity instead of selling
+
+If the user **already owns** their home and is equity-rich (or a retiree weighing liquidity /
+decumulation), the rent-vs-buy framing often isn't the real question — the question is whether to
+**tap the existing equity** rather than sell. Route to **`analyze_home_equity`** to model the three
+levers: a **HELOC** (revolving interest-only draw, then amortizing repay), a **cash-out refinance**
+(new 1st lien, break-even on the payment delta), or a **reverse mortgage** (HECM principal limit,
+tenure / lump-sum / line-of-credit payout, crossover age). It returns an `afterTaxBorrowingCost`,
+an `extract` / `do_not_extract` / `toss_up` recommendation, and an `asModelDebt` for the forecast.
+
+```
+analyze_home_equity({
+  mode: "heloc",
+  homeValue: 600000,
+  mortgageBalance: 250000,
+  extractAmount: 80000,
+  proceedsUse: "home_improvement",
+  itemizesDeductions: true,
+  marginalTaxRate: 0.32,
+  filingStatus: "married_joint"
+})  // mode: "cash_out_refi" or "reverse_mortgage" for the other levers
+```
+
 ## Next-actions hints
 
 The tool returns a `next_actions[]` array (each `{ tool, why, prefilled_args }`, with `prefilled_args`
@@ -116,6 +140,9 @@ rather than guessing the next call. (`analyze_property_return` chains the other 
   depreciation shelter, §1250 recapture, NIIT, 1031 deferral) when the home is an investment rental
   rather than a primary residence.
 - **str-investment-analyzer** — nightly short-term rental (Airbnb/VRBO) investment analysis.
+- **home-equity (`analyze_home_equity`)** — if they already own, route here to model HELOC /
+  cash-out refi / reverse mortgage equity extraction instead of selling (and this tool routes back
+  to rent-vs-buy when the question is really own-vs-rent).
 
 ## Notes
 

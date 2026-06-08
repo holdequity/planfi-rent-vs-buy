@@ -12,7 +12,7 @@
     {
       "name": "rent-vs-buy",
       "source": "./skills/rent-vs-buy",
-      "description": "Rent vs buy: breakeven home-appreciation rate (pre & after tax), per-horizon BUY-vs-RENT net worth, payoff/crossover years, and invest-the-difference opportunity cost. Thin orchestration over the planfi MCP.",
+      "description": "Rent vs buy: breakeven home-appreciation rate (pre & after tax), per-horizon BUY-vs-RENT net worth, payoff/crossover years, invest-the-difference opportunity cost, and — if they already own — home-equity extraction (HELOC revolving draw/repay, cash-out refi, or reverse mortgage) as a liquidity/decumulation lever instead of selling. Thin orchestration over the planfi MCP.",
       "version": "1.0.0",
       "license": "MIT",
       "author": {
