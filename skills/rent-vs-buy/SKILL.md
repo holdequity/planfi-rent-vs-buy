@@ -110,6 +110,13 @@ carrying `{ plan_id }` when available). The only server-defined edge out of `ana
 rather than guessing the next call. (`analyze_property_return` chains the other way: it suggests
 `analyze_rent_vs_buy` as ITS follow-up, not vice versa.)
 
+## Related skills
+
+- **long-term-rental-analyzer** — after-tax buy-and-hold rental returns (Schedule E P&L, 27.5-yr
+  depreciation shelter, §1250 recapture, NIIT, 1031 deferral) when the home is an investment rental
+  rather than a primary residence.
+- **str-investment-analyzer** — nightly short-term rental (Airbnb/VRBO) investment analysis.
+
 ## Notes
 
 - All decimals are fractions; all dollars are today's (real) dollars; the sim runs nominal internally
